@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+   
+    <!-- CSS only -->
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+   <link rel="stylesheet" href="../assets/css/styles.css">
+   <!--link+tab  (comando rápido)-->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header class="titulo">
+        BlackJack
+    </header>
+    <div class="row mt-2"><!--el mt-2 dice q tenga un margen superior, espacio en la parte superior del div -->
+        <div id="divBotones" class="col text-center"><!--para que todo lo q ponga aparezca centrado-->
+            <button class="btn btn-danger" id="btnNuevo">Nuevo juego</button>
+            <button class="btn btn-primary" id="btnPedir">Pedir carta</button>
+            <button class="btn btn-primary" id="btnPlantarme">Plantarme</button>
+        </div>
+    </div>    
+    <div class="row container mt-2">
+        <div class="col">
+            <h1>Jugador 1 -<small>0</small></h1>
+            <div id="contenedorCartasJ">
+            <div id="jugador-cartas"><!--ACA PONGO TODAS LAS CARTAS QUE EL JUGADOR VA JUGANNDO-->
+                <!--<img class="carta" src="../assets/cartas/2C.png" alt="">-->
+            </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row contaier ">
+        <div class="col">
+            <h1>Crupier -<small>0</small></small></h1>
+            <div id="crupier-cartas"><!--ACA PONGO TODAS LAS CARTAS de la computadora-->
+                
+            </div>
+        </div>
+    </div>
+    <footer>
+       
+            <h1>Creado por Jey gi</h1>
+          
+    </footer>
+ 
+   <!--
+  <script src="https://cdn.jsdelivr.net/npm/underscore@latest/underscore-umd-min.js"></script>
+    --> 
+
+    <script src="../assets/js/underscore-min.js"></script>
+  
+    <script src="../assets/js/juego2.js"></script>
+    <!--script:  (comanndo rápido)-->
+    
+   
+</body>
+</html>
