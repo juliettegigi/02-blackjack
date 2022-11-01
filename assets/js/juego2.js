@@ -35,9 +35,7 @@ const valorCarta=(carta)=>{
 
 const divCentro=document.createElement('div');
 function imprimir(mensaje){
-    //<div class="position-absolute top-50 start-50 translate-middle"></div>
-    
-    divCentro.id="dicCentro";
+
     divCentro.classList.add("position-absolute");   
     divCentro.classList.add('top-50');
     divCentro.classList.add('start-50');
@@ -76,35 +74,33 @@ function agregarImg(divId, imgsrc){
 const pedirCartaFront=()=>{
     const carta= pedirCarta();
     agregarImg('#jugador-cartas',carta);
+    //hay que hacer la suma q si no es unn a solo se suma
     if(valorCarta(carta)!=0)
         puntosJugador+=valorCarta(carta);
     else {contadorAss++;
         puntosJugador+=11;
     }
-    if (puntosJugador==21){
-        btnPedir.disabled=true; 
-        btnPlantarme.disabled=true;
-        imprimir(ganaJugador);
-        return;
-    }
-    if(puntosJugador>21){
-        if(contadorAss==0){
-            imprimir(pierdeJugador()); 
+    //hay que ver si esa suma se pasa de 21
+    if (puntosJugador==21)
+        imprimir(ganaJugador());
+    else if(puntosJugador>21){// hay que ver si se está pasando por un ass
+            if(!contadorAss===0){ 
+                puntosJugador-=10;            
+                contadorAss--;
+            }   
+            if(puntosJugador>21)
+              imprimir(pierdeJugador()); 
+        }
+    if(puntosJugador>=21){
             btnPedir.disabled=true; 
             btnPlantarme.disabled=true;
-        }
-        else{
-            puntosJugador-=10;            
-            contadorAss--;
-            if(puntosJugador>21){
-                imprimir(pierdeJugador()); 
-               btnPedir.disabled=true; 
-               btnPlantarme.disabled=true;
-            }   
-        }
     }
-    smalls[0].innerText=puntosJugador;
+    smalls[0].innerText=puntosJugador;         
 }
+  
+    
+  
+
 
     let cartasCrupier=[];
     
@@ -114,10 +110,11 @@ const pedirCartaFront=()=>{
         cartasCrupier=[];       
         cartasCrupier.push(pedirCarta());
         cartasCrupier.push(pedirCarta());
+        //le doy dos cartas a la crupier pero  muestro  una carta
         agregarImg('#crupier-cartas',cartasCrupier[0]);
         puntosCrupier=valorCarta(cartasCrupier[0]);
         if(puntosCrupier===0)
-          puntosCrupier=11;
+          puntosCrupier=11; 
         smalls[1].innerText=puntosCrupier;
     }    
 
@@ -127,49 +124,45 @@ function main(){
     for(let i=0;i<2;i++){
         pedirCartaFront();    
     }
-    if(puntosJugador===21)
+    if(puntosJugador===21){
        imprimir(blackjack());
-
-       
+       btnPedir.disabled=true; 
+       btnPlantarme.disabled=true;
+    }
 }
 /////////////////////////                               EVENNTOS
 const btnPedir=document.querySelector("#btnPedir");
 const btnPlantarme=document.querySelector("#btnPlantarme");
 btnPedir.addEventListener('click',()=>{ pedirCartaFront()});
+
 btnPlantarme.addEventListener('click',()=>{
+    // muestro la 2da carta de la crupier
     agregarImg('#crupier-cartas',cartasCrupier[1]);
-    if(valorCarta(cartasCrupier[1])===0){
-      puntosCrupier+=11;
+    if(valorCarta(cartasCrupier[1])===0){// si le toca un a le asigno un 11 si no se pasa de 21
+      puntosCrupier+=11;                  // sino le asigno unn uno
       if(puntosCrupier>21)
         puntosCrupier-=10;
     }
-    else 
+    else  // si no le toca una ==> le asigno el valor correspondiente
        puntosCrupier+=valorCarta(cartasCrupier[1]);
-     
-    smalls[1].innerText=puntosCrupier;
-
+    // si la crupier no suma más de 16==> tiene que sacar otra carta 
     while(puntosCrupier<17){
         cartasCrupier.push(pedirCarta());
         agregarImg('#crupier-cartas',cartasCrupier[cartasCrupier.length-1]);
+        // veo si la carta q sacó es un A 
         if(valorCarta(cartasCrupier[cartasCrupier.length-1])===0){
             puntosCrupier+=11;
-            if(puntosCrupier>21)
+            if(puntosCrupier>21)  // hay q ver si le sumo 11 o 1
                 puntosCrupier-=10;
            }
         else   
-        puntosCrupier+=valorCarta(cartasCrupier[cartasCrupier.length-1]);
-       
-        smalls[1].innerText=puntosCrupier;
-        if(puntosCrupier>21){
-            imprimir(ganaJugador());
-            btnPedir.disabled=true; 
-               btnPlantarme.disabled=true;
-             return;
-            }
+         puntosCrupier+=valorCarta(cartasCrupier[cartasCrupier.length-1]);
+               
     }
-    if(puntosJugador>puntosCrupier)
+    if( (puntosCrupier>21)  || puntosJugador>puntosCrupier )
          imprimir(ganaJugador());
     else imprimir(pierdeJugador());  
+    smalls[1].innerText=puntosCrupier;
     btnPedir.disabled=true; 
     btnPlantarme.disabled=true;
 });
