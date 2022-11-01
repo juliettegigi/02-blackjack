@@ -81,6 +81,12 @@ const pedirCartaFront=()=>{
     else {contadorAss++;
         puntosJugador+=11;
     }
+    if (puntosJugador==21){
+        btnPedir.disabled=true; 
+        btnPlantarme.disabled=true;
+        imprimir(ganaJugador);
+        return;
+    }
     if(puntosJugador>21){
         if(contadorAss==0){
             imprimir(pierdeJugador()); 
